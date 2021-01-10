@@ -1,80 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <!-- Primary Meta Tags -->
-<title>SmolUrl</title>
-<meta name="title" content="SmolUrl">
-<meta name="description" content="The best URL shortener on the web. 
-Free and unlimited link creation. ">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Primary Meta Tags -->
+    <title>SmolUrl</title>
+    <!-- Primary Meta Tags -->
+    <title>Smol Url</title>
+    <meta name="title" content="Smol Url" />
+    <meta
+      name="description"
+      content="The best URL shortener on the web. 
+Free and unlimited tiny link creation. Simple and easy to use short urls."
+    />
 
-<!-- Open Graph / Facebook -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://smolurl.com/">
-<meta property="og:title" content="SmolUrl">
-<meta property="og:description" content="The best URL shortener on the web. 
-Free and unlimited link creation. ">
-<meta property="og:image" content="https://smolurl.com/images/suit_dog.jpg">
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://smolurl.com/" />
+    <meta property="og:title" content="Smol Url" />
+    <meta
+      property="og:description"
+      content="The best URL shortener on the web. 
+Free and unlimited tiny link creation. Simple and easy to use short urls."
+    />
+    <meta
+      property="og:image"
+      content="https://smolurl.com/images/suit_dog.jpg"
+    />
 
-<!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image">
-<meta property="twitter:url" content="https://smolurl.com/">
-<meta property="twitter:title" content="SmolUrl">
-<meta property="twitter:description" content="The best URL shortener on the web. 
-Free and unlimited link creation. ">
-<meta property="twitter:image" content="https://smolurl.com/images/suit_dog.jpg">
-
-
-    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://smolurl.com/" />
+    <meta property="twitter:title" content="Smol Url" />
+    <meta
+      property="twitter:description"
+      content="The best URL shortener on the web. 
+Free and unlimited tiny link creation. Simple and easy to use short urls."
+    />
+    <meta
+      property="twitter:image"
+      content="https://smolurl.com/images/suit_dog.jpg"
+    />
+    <link
+      href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
     <style>
-        *{
-            box-sizing: border-box;
-        }
-        html,
-        body{
-            height: 100%;
-        }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
     </style>
-</head>
-<body class="bg-indigo-600	">
-
-    <div class="flex flex-col justify-center items-center h-full">   
-        <div class="w-11/12 m-2 lg:w-3/12 rounded border-green-400 border-2 bg-white	 "> 
-            <div class="p-1">
-                <h1 class="text-xl text-center">Smol Url</h1>
-                <p class="text-center">The worlds best url shortner!</p>
-            </div>
-            <% if(tiny_url == undefined) {%>
-                <%- include('./partials/form'); %>
-            <% } else {%>
-                <%- include('./partials/result', {url,tiny_url}); %>
-            <% }%>
+  </head>
+  <body class="bg-indigo-600">
+    <div class="flex flex-col justify-center items-center h-full">
+      <div
+        class="w-11/12 m-2 lg:w-3/12 rounded border-green-400 border-2 bg-white"
+      >
+        <div class="p-1">
+          <h1 class="text-xl text-center">Smol Url</h1>
+          <p class="text-center">The worlds best url shortner!</p>
         </div>
+        <% if(tiny_url == undefined) {%> <%- include('./partials/form'); %> <% }
+        else {%> <%- include('./partials/result', {url,tiny_url}); %> <% }%>
+      </div>
     </div>
 
     <script>
-        function myFunction() {
-            /* Get the text field */
-            var copyText = document.getElementById("result");
-            var notice = document.getElementById("notice");
-          
+      function myFunction() {
+        /* Get the text field */
+        var copyText = document.getElementById("result");
+        var notice = document.getElementById("notice");
 
-            /* Select the text field */
-            copyText.select();
-            copyText.setSelectionRange(0, 99999); /* For mobile devices */
-          
-            /* Copy the text inside the text field */
-            document.execCommand("copy");
-          
+        /* Select the text field */
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); /* For mobile devices */
 
-            notice.hidden = false;
+        /* Copy the text inside the text field */
+        document.execCommand("copy");
 
-            setTimeout(() => {
-                notice.hidden = true
-            }, 1500)
-            
-          }
+        notice.hidden = false;
+
+        setTimeout(() => {
+          notice.hidden = true;
+        }, 1500);
+      }
     </script>
-</body>
+  </body>
 </html>
