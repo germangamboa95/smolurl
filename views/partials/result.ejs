@@ -1,0 +1,12 @@
+<div class="p-2 flex flex-col space-y-2">
+    <div><label for="">Original:</label>
+        <div><%= url %></div>
+    </div>    
+    <div  onclick="myFunction();" >
+        <label for="">Smol: </label>
+
+        <input class="w-full" id="result"  value=<%= tiny_url %>>
+    </div>
+        <span id="notice" hidden>Copied</span>
+    <a class="underline text-blue-400	" href="/">Make another smol url</a>
+</div>

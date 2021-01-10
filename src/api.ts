@@ -1,33 +1,53 @@
-import express from "express";
+import express, { Router } from "express";
 import { nanoid } from "nanoid";
-import { LinkRepository } from "./links/link.repository";
+import { HitRepository, LinkRepository } from "./links/link.repository";
+import { fireWebhook } from "./links/webhooks";
+import { asyncUtil } from "./utils/async-wrapper";
 
-const app = express();
+const api = Router();
 
-app.use(express.json());
-
-app.get("/", async (req, res) => {
-  const x = await LinkRepository().find();
-  res.json({ x });
-});
-
-app.post("/links", async (req, res) => {
+api.post("/links", async (req, res) => {
   const { url } = req.body;
   const hash = nanoid(10);
 
-  const x = await LinkRepository().save({
+  const link = await LinkRepository().save({
     original_url: url,
     hash,
   });
-  res.json({ x });
+  res.json({ data: link });
 });
 
-app.get("/:hash", async (req, res) => {
+api.get(
+  "/links/:hash",
+  asyncUtil(async (req: express.Request, res: express.Response) => {
+    const hash = req.params.hash;
+    const link = await LinkRepository().findOneOrFail({ hash });
+    res.json(link);
+  })
+);
+
+api.get("/:hash", async (req, res) => {
   const hash = req.params.hash;
-  const { original_url } = await LinkRepository().findOneOrFail({ hash });
+  const link = await LinkRepository().findOneOrFail({
+    hash,
+  });
+
+  const { original_url, id, webhook } = link;
+
   res.redirect(original_url);
+
+  HitRepository().save({
+    link_id: id,
+    meta: { ip: req.ip, headers: req.headers },
+  });
+
+  if (webhook) {
+    fireWebhook(webhook, {
+      link,
+      current_hit: { ip: req.ip, headers: req.headers },
+      meta: link.webhook_meta,
+    });
+  }
 });
 
-export default async () => {
-  return app;
-};
+export default api;
