@@ -23,7 +23,7 @@ module.exports = [
     username: process.env.USERNAME,
     password: process.env.PASSWORD,
     "synchronize": false,
-    "logging": true,
+    "logging": false,
     "entities": ["build/**/*.js"],
     "migrations": ["build/migration/**/*.js"],
     "subscribers": ["build/subscriber/**/*.js"],

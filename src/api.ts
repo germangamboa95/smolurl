@@ -26,28 +26,31 @@ api.get(
   })
 );
 
-api.get("/:hash", async (req, res) => {
-  const hash = req.params.hash;
-  const link = await LinkRepository().findOneOrFail({
-    hash,
-  });
-
-  const { original_url, id, webhook } = link;
-
-  res.redirect(original_url);
-
-  HitRepository().save({
-    link_id: id,
-    meta: { ip: req.ip, headers: req.headers },
-  });
-
-  if (webhook) {
-    fireWebhook(webhook, {
-      link,
-      current_hit: { ip: req.ip, headers: req.headers },
-      meta: link.webhook_meta,
+api.get(
+  "/:hash",
+  asyncUtil(async (req: express.Request, res: express.Response) => {
+    const hash = req.params.hash;
+    const link = await LinkRepository().findOneOrFail({
+      hash,
     });
-  }
-});
+
+    const { original_url, id, webhook } = link;
+
+    res.redirect(original_url);
+
+    HitRepository().save({
+      link_id: id,
+      meta: { ip: req.ip, headers: req.headers },
+    });
+
+    if (webhook) {
+      fireWebhook(webhook, {
+        link,
+        current_hit: { ip: req.ip, headers: req.headers },
+        meta: link.webhook_meta,
+      });
+    }
+  })
+);
 
 export default api;

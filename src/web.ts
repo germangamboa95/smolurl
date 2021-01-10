@@ -5,6 +5,8 @@ import { format } from "url";
 import querystring from "querystring";
 const web = Router();
 
+web.use(express.static("public"));
+
 web.use(express.urlencoded({ extended: true }));
 
 web.get("/", (req, res) => {
