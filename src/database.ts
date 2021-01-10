@@ -1,6 +1,9 @@
 import { createConnection, getConnectionOptions } from "typeorm";
 
 export const initDatabase = async () => {
-  const options = await getConnectionOptions();
-  return createConnection(options);
+  const conn = process.env.CONNECTION_NAME;
+
+  const options = await getConnectionOptions(conn);
+  console.log(options);
+  return createConnection({ ...options, name: "default" });
 };
