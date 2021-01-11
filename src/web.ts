@@ -12,7 +12,6 @@ web.use(express.urlencoded({ extended: true }));
 web.get("/", (req, res) => {
   const { url, tiny_url } = req.query;
 
-  console.log(req.query);
   return res.render("index", {
     url,
     tiny_url,

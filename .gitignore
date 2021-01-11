@@ -117,6 +117,8 @@ dist
 
 
 
-/build
+build
 
-/public/js
+public/js
+
+*.sqlite
