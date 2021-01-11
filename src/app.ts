@@ -1,5 +1,6 @@
 import express from "express";
 import api from "./api";
+import { docs } from "./swagger";
 import web from "./web";
 
 const app = express();
@@ -10,7 +11,7 @@ app.use(express.json());
 
 app.use(web);
 app.use(api);
-
+// app.use(docs);
 api.use(function (
   err: Error,
   req: express.Request,
