@@ -55,6 +55,9 @@ api.post("/links", function (req, res) { return __awaiter(void 0, void 0, void 0
                     })];
             case 1:
                 link = _a.sent();
+                return [4 /*yield*/, link_repository_1.LinkRepository().findOneOrFail({ hash: hash })];
+            case 2:
+                link = _a.sent();
                 res.json({ data: link });
                 return [2 /*return*/];
         }
@@ -69,12 +72,12 @@ api.get("/links/:hash", async_wrapper_1.asyncUtil(function (req, res) { return _
                 return [4 /*yield*/, link_repository_1.LinkRepository().findOneOrFail({ hash: hash })];
             case 1:
                 link = _a.sent();
-                res.json(link);
+                res.json({ data: link });
                 return [2 /*return*/];
         }
     });
 }); }));
-api.get("/:hash", function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+api.get("/:hash", async_wrapper_1.asyncUtil(function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var hash, link, original_url, id, webhook;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -101,5 +104,5 @@ api.get("/:hash", function (req, res) { return __awaiter(void 0, void 0, void 0,
                 return [2 /*return*/];
         }
     });
-}); });
+}); }));
 exports.default = api;

@@ -13,6 +13,7 @@ app.set("view engine", "ejs");
 app.use(express_1.default.json());
 app.use(web_1.default);
 app.use(api_1.default);
+// app.use(docs);
 api_1.default.use(function (err, req, res, next) {
     if (err.name === "EntityNotFound") {
         return res.status(404).json({ message: "Resource missing." });

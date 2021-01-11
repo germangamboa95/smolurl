@@ -74,6 +74,9 @@ var Link = /** @class */ (function () {
             });
         });
     };
+    Link.prototype.loadShortLink = function () {
+        this.short_link = "" + process.env.HOST + this.hash;
+    };
     __decorate([
         typeorm_1.PrimaryGeneratedColumn("uuid"),
         __metadata("design:type", String)
@@ -113,6 +116,12 @@ var Link = /** @class */ (function () {
         __metadata("design:paramtypes", []),
         __metadata("design:returntype", Promise)
     ], Link.prototype, "loadHits", null);
+    __decorate([
+        typeorm_1.AfterLoad(),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], Link.prototype, "loadShortLink", null);
     Link = __decorate([
         typeorm_1.Entity()
     ], Link);
