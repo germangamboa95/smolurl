@@ -19,20 +19,4 @@ web.get("/", (req, res) => {
   });
 });
 
-web.post("/", async (req, res) => {
-  const { url } = req.body;
-  const hash = nanoid(10);
-
-  await LinkRepository().save({
-    original_url: url,
-    hash,
-  });
-
-  const q = querystring.encode({
-    url,
-    tiny_url: `${process.env.HOST}${hash}`,
-  });
-  return res.redirect(`/?${q}`);
-});
-
 export default web;

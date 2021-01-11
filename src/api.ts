@@ -8,12 +8,16 @@ const api = Router();
 
 api.post("/links", async (req, res) => {
   const { url } = req.body;
+
   const hash = nanoid(10);
 
-  const link = await LinkRepository().save({
+  let link = await LinkRepository().save({
     original_url: url,
     hash,
   });
+
+  link = await LinkRepository().findOneOrFail({ hash });
+
   res.json({ data: link });
 });
 
@@ -22,7 +26,7 @@ api.get(
   asyncUtil(async (req: express.Request, res: express.Response) => {
     const hash = req.params.hash;
     const link = await LinkRepository().findOneOrFail({ hash });
-    res.json(link);
+    res.json({ data: link });
   })
 );
 

@@ -8,6 +8,7 @@ import {
   Index,
   OneToMany,
   AfterLoad,
+  AfterInsert,
 } from "typeorm";
 import { HitRepository } from "./link.repository";
 
@@ -40,6 +41,8 @@ export class Link {
 
   hits?: number;
 
+  short_link?: string;
+
   @AfterLoad()
   async loadHits() {
     try {
@@ -49,5 +52,10 @@ export class Link {
     } catch (error) {
       this.hits = 0;
     }
+  }
+
+  @AfterLoad()
+  loadShortLink() {
+    this.short_link = `${process.env.HOST}${this.hash}`;
   }
 }

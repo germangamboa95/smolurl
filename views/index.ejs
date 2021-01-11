@@ -1,61 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script
-      async
-      src="https://www.googletagmanager.com/gtag/js?id=G-K3HJ6S8DHS"
-    ></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
-
-      gtag("config", "G-K3HJ6S8DHS");
-    </script>
-
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- Primary Meta Tags -->
-    <title>SmolUrl</title>
-    <!-- Primary Meta Tags -->
-    <title>Smol Url</title>
-    <meta name="title" content="Smol Url" />
-    <meta
-      name="description"
-      content="The best URL shortener on the web. 
-Free and unlimited tiny link creation. Simple and easy to use short urls."
-    />
-
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://smolurl.com/" />
-    <meta property="og:title" content="Smol Url" />
-    <meta
-      property="og:description"
-      content="The best URL shortener on the web. 
-Free and unlimited tiny link creation. Simple and easy to use short urls."
-    />
-    <meta
-      property="og:image"
-      content="https://smolurl.com/images/suit_dog.jpg"
-    />
-
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://smolurl.com/" />
-    <meta property="twitter:title" content="Smol Url" />
-    <meta
-      property="twitter:description"
-      content="The best URL shortener on the web. 
-Free and unlimited tiny link creation. Simple and easy to use short urls."
-    />
-    <meta
-      property="twitter:image"
-      content="https://smolurl.com/images/suit_dog.jpg"
-    />
+    <%- include("./partials/social_tags.ejs") %>
     <link
       href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
       rel="stylesheet"
@@ -64,31 +10,35 @@ Free and unlimited tiny link creation. Simple and easy to use short urls."
       * {
         box-sizing: border-box;
       }
+
       html,
       body {
         height: 100%;
       }
     </style>
   </head>
+
   <body class="bg-indigo-600">
-    <div class="flex flex-col justify-center items-center h-full">
+    <div class="flex flex-col items-center h-full">
       <div
-        class="w-11/12 m-2 lg:w-3/12 rounded border-green-400 border-2 bg-white"
+        class="w-11/12 m-2 lg:w-6/12 rounded border-green-400 border-2 bg-white"
       >
         <div class="p-1">
           <h1 class="text-xl text-center">Smol Url</h1>
           <p class="text-center">The worlds best url shortner!</p>
         </div>
-        <% if(tiny_url == undefined) {%> <%- include('./partials/form'); %> <% }
-        else {%> <%- include('./partials/result', {url,tiny_url}); %> <% }%>
+        <%- include('./partials/form'); %>
+
+        <div class="links"></div>
       </div>
     </div>
 
     <script>
-      function myFunction() {
+      function myFunction(id) {
+        console.log(id);
         /* Get the text field */
-        var copyText = document.getElementById("result");
-        var notice = document.getElementById("notice");
+        var copyText = document.getElementById(`result-${id}`);
+        var notice = document.getElementById(`notice-${id}`);
 
         /* Select the text field */
         copyText.select();
@@ -103,6 +53,44 @@ Free and unlimited tiny link creation. Simple and easy to use short urls."
           notice.hidden = true;
         }, 1500);
       }
+
+      const form = document.getElementById("main-form");
+      const linkContainer = document.querySelector(".links");
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const data = {};
+        formData.forEach((val, key) => {
+          data[key] = val;
+        });
+
+        fetch("/links", {
+          method: "post",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+          .then(({ data }) => {
+            linkContainer.innerHTML += `
+            <div class="p-2 flex flex-col space-y-2">
+                <div><label for="">Original:</label>
+                    <div>${data.original_url}</div>
+                </div>    
+                <div  onclick="myFunction('${data.hash}');" >
+                    <label for="">Smol: </label>
+            
+                    <input class="w-full" id="result-${data.hash}"  value="${data.short_link}">
+                </div>
+                    <span id="notice-${data.hash}" hidden>Copied</span>
+            </div>
+            <hr/>
+            
+            `;
+          });
+      });
     </script>
   </body>
 </html>
