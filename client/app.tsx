@@ -10,4 +10,3 @@ render(
   </div>,
   app
 );
-

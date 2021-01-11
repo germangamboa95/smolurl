@@ -2,10 +2,10 @@
   "compilerOptions": {
     "target": "es5",
     "module": "commonjs",
-    "lib": ["es6"],
+    "lib": ["es6", "DOM"],
     "allowJs": true,
     "outDir": "build",
-
+    "jsx": "react" /* Specify JSX code generation: 'preserve', 'react-native', or 'react'. */,
     "strict": true,
     "noImplicitAny": true,
     "esModuleInterop": true,

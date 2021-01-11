@@ -4,4 +4,4 @@ let mix = require('laravel-mix');
 
 
 
-mix.js('client/app.js', 'js').setPublicPath('public');
+mix.ts('client/app.tsx', 'js').setPublicPath('public');
