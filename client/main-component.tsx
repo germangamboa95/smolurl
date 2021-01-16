@@ -51,6 +51,14 @@ interface ShortyType {
   short_link: string;
 }
 
+const Card: React.FC = ({ children }) => {
+  return (
+    <div className="mt-6 p-6 w-3/6 bg-white rounded text-center shadow-2xl">
+      {children}
+    </div>
+  );
+};
+
 export const MainComponent = () => {
   const [url, setUrl] = useState("");
   const [linkList, setLinkList] = useState<ShortyType[]>([]);
@@ -70,7 +78,7 @@ export const MainComponent = () => {
   };
 
   return (
-    <div className="mt-6 p-6 w-3/6 bg-white rounded text-center shadow-2xl">
+    <Card>
       <h1 className="text-2xl">SmolURL</h1>
       <p>The worlds best url shortner!</p>
       <form className="flex flex-col" onSubmit={handleFormSubmit}>
@@ -82,6 +90,6 @@ export const MainComponent = () => {
         />
         <Button className="mt-2 self-end" label="Make It Smol" />
       </form>
-    </div>
+    </Card>
   );
 };
