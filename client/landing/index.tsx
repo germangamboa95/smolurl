@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { ShortyType } from "../@types";
 import { Card, Input, Button } from "../components";
-import { Result } from "../components/result";
+import { Result } from "./result";
 
 export const LandingPage = () => {
   const [url, setUrl] = useState("");
