@@ -7,9 +7,7 @@ const app = document.getElementById("app");
 
 render(
   <div className="bg-indigo-600 h-full">
-    <div className="flex justify-center">
-      <MainComponent />
-    </div>
+    <MainComponent />
   </div>,
   app
 );
