@@ -1,69 +1,7 @@
-import axios from "axios";
-import { link } from "fs";
 import React, { FormEvent, useEffect, useState } from "react";
 import { CopyToClipboard } from "react-copy-to-clipboard";
-
-const Input: React.FC<React.InputHTMLAttributes<HTMLInputElement>> = (
-  props
-) => {
-  return (
-    <input
-      className=" w-full px-4 py-2 border border-gray-700 rounded "
-      {...props}
-    />
-  );
-};
-
-interface ButtonProps {
-  label: string;
-}
-
-const Button: React.FC<
-  React.ButtonHTMLAttributes<HTMLButtonElement> & ButtonProps
-> = (props) => {
-  const { className } = props;
-
-  return (
-    <button
-      {...props}
-      className={`px-4 py-2 border border-gray-700 rounded ${className}`}
-    >
-      {props.label}
-    </button>
-  );
-};
-
-/**
- * created_at: "2021-01-16T12:09:11.672Z"
-deleted_at: null
-hash: "BavwZ6wzth"
-hits: 0
-id: "c9da2fcc-7f15-492e-ad36-c066d5a51d98"
-original_url: "https://github.com/germangamboa95/smolurl"
-short_link: "http://localhost:5555/BavwZ6wzth"
-updated_at: "2021-01-16T12:09:11.672Z"
-webhook: null
-webhook_meta: n
- */
-
-interface ShortyType {
-  hash: string;
-  original_url: string;
-  short_link: string;
-}
-
-const Card: React.FC<React.HTMLAttributes<HTMLDivElement>> = ({
-  children,
-  className = "",
-}) => {
-  return (
-    <div
-      className={`mt-6 p-6 w-full md:w-3/6 bg-white rounded text-center shadow-2xl ${className}`}
-    >
-      {children}
-    </div>
-  );
-};
+import { ShortyType } from "../@types";
+import { Card } from "../components";
 
 enum ResultComponentStatus {
   INIT = "init",
@@ -71,7 +9,7 @@ enum ResultComponentStatus {
   TOUCHED = "touched",
 }
 
-const ResultComponent: React.FC<ShortyType> = (props) => {
+export const Result: React.FC<ShortyType> = (props) => {
   const { original_url, short_link } = props;
   const [status, setStatus] = useState<ResultComponentStatus>(
     ResultComponentStatus.INIT
@@ -97,8 +35,8 @@ const ResultComponent: React.FC<ShortyType> = (props) => {
           width="24"
           height="24"
           xmlns="http://www.w3.org/2000/svg"
-          fill-rule="evenodd"
-          clip-rule="evenodd"
+          fillRule="evenodd"
+          clipRule="evenodd"
         >
           <path d="M21.883 12l-7.527 6.235.644.765 9-7.521-9-7.479-.645.764 7.529 6.236h-21.884v1h21.883z" />
         </svg>
@@ -110,7 +48,7 @@ const ResultComponent: React.FC<ShortyType> = (props) => {
             {short_link}{" "}
             {status !== ResultComponentStatus.COPIED && (
               <svg
-                className="inline-block mx-2"
+                className="inline-block mx-2 animate-bounce"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
                 height="24"
@@ -134,46 +72,5 @@ const ResultComponent: React.FC<ShortyType> = (props) => {
         </CopyToClipboard>
       </div>
     </Card>
-  );
-};
-
-export const MainComponent = () => {
-  const [url, setUrl] = useState("");
-  const [linkList, setLinkList] = useState<ShortyType[]>([]);
-
-  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
-    const { data } = await axios.post("/links", {
-      url,
-    });
-
-    const link: ShortyType = data.data;
-
-    setLinkList([...linkList, link]);
-
-    setUrl("");
-  };
-
-  return (
-    <div className="flex flex-col items-center mx-6">
-      <Card>
-        <h1 className="text-2xl">SmolURL</h1>
-        <p>The worlds best url shortner!</p>
-        <form className="flex flex-col" onSubmit={handleFormSubmit}>
-          <Input
-            value={url}
-            onChange={(e) => setUrl(e.target.value)}
-            required
-            type="url"
-          />
-          <Button className="mt-2 self-end" label="Make It Smol" />
-        </form>
-      </Card>
-
-      {linkList.map((link) => (
-        <ResultComponent {...link} />
-      ))}
-    </div>
   );
 };
