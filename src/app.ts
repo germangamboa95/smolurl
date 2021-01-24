@@ -4,6 +4,7 @@ import { Server } from "@overnightjs/core";
 import express from "express"
 import { LinkController, RedirectController } from "./links/links.controller";
 import { StaticController } from "./StaticController";
+import { Logger } from "@overnightjs/logger";
 
 
 export class ApplicationServer extends Server {
@@ -24,6 +25,7 @@ export class ApplicationServer extends Server {
   }
 
   private setup() {
+    this.app.use(express.static("public"));
     this.app.use(express.json());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.set("view engine", "ejs");
