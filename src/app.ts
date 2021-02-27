@@ -33,6 +33,7 @@ export class ApplicationServer extends Server {
   }
 
   public start(port: number): void {
+    console.log("SDFGSDFGD")
     this.app.listen(port, () => {
       Logger.Imp('Server listening on port: ' + port);
     })

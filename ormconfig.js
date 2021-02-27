@@ -1,3 +1,4 @@
+
 module.exports = [
   {
     "name": "default",
@@ -9,12 +10,12 @@ module.exports = [
     password: process.env.DB_PASSWORD,
     "synchronize": false,
     "logging": true,
-    "entities": ["src/**/*.ts"],
-    "migrations": ["src/migration/**/*.ts"],
+    "entities": ["src/links/*.ts"],
+    "migrations": ["migrations/**/*.ts"],
     "subscribers": ["src/subscriber/**/*.ts"],
     "cli": {
       "entitiesDir": "src/entity",
-      "migrationsDir": "src/migration",
+      "migrationsDir": "migrations",
       "subscribersDir": "src/subscriber"
     }
   },
@@ -29,7 +30,7 @@ module.exports = [
     "synchronize": false,
     "logging": false,
     "entities": ["build/**/*.js"],
-    "migrations": ["build/migration/**/*.js"],
+    "migrations": ["migrations/**/*.ts"],
     "subscribers": ["build/subscriber/**/*.js"],
 
   }

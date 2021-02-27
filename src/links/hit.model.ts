@@ -17,7 +17,10 @@ export class Hit {
 
   @Column("simple-json")
   meta: object;
-
+  
+  @Column()
+  sample:string;
+  
   @CreateDateColumn()
   created_at: Date;
 }
