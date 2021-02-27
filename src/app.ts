@@ -1,28 +1,41 @@
-import express from "express";
-import api from "./api";
-import { docs } from "./swagger";
-import web from "./web";
+import "reflect-metadata";
+require("dotenv").config();
+import { Server } from "@overnightjs/core";
+import express from "express"
+import { LinkController, RedirectController } from "./links/links.controller";
+import { StaticController } from "./StaticController";
+import { Logger } from "@overnightjs/logger";
 
-const app = express();
 
-app.set("view engine", "ejs");
+export class ApplicationServer extends Server {
 
-app.use(express.json());
-
-app.use(web);
-app.use(api);
-// app.use(docs);
-api.use(function (
-  err: Error,
-  req: express.Request,
-  res: express.Response,
-  next: express.NextFunction
-) {
-  if (err.name === "EntityNotFound") {
-    return res.status(404).json({ message: "Resource missing." });
+  constructor() {
+    super(process.env.NODE_ENV === 'development'); // setting showLogs to true
+    this.setup()
+    this.setupControllers();
   }
 
-  res.status(500).send("Something broke!");
-});
+  private setupControllers(): void {
 
-export { app };
+
+    super.addControllers(
+      [new StaticController(), new LinkController(), new RedirectController()],
+
+    );
+  }
+
+  private setup() {
+    this.app.use(express.static("public"));
+    this.app.use(express.json());
+    this.app.use(express.urlencoded({ extended: true }));
+    this.app.set("view engine", "ejs");
+    this.app.use(express.json());
+  }
+
+  public start(port: number): void {
+    console.log("SDFGSDFGD")
+    this.app.listen(port, () => {
+      Logger.Imp('Server listening on port: ' + port);
+    })
+  }
+}

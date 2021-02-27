@@ -6,95 +6,10 @@
       href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css"
       rel="stylesheet"
     />
-    <style>
-      * {
-        box-sizing: border-box;
-      }
-
-      html,
-      body {
-        height: 100%;
-      }
-    </style>
+    <script async src="/js/app.js"></script>
   </head>
 
-  <body class="bg-indigo-600">
+  <body>
     <div id="app"></div>
-
-    <div class="flex flex-col items-center h-full">
-      <div
-        class="w-11/12 m-2 lg:w-6/12 rounded border-green-400 border-2 bg-white"
-      >
-        <div class="p-1">
-          <h1 class="text-xl text-center">Smol Url</h1>
-          <p class="text-center">The worlds best url shortner!</p>
-        </div>
-        <%- include('./partials/form'); %>
-
-        <div class="links"></div>
-      </div>
-    </div>
-
-    <script>
-      function myFunction(id) {
-        console.log(id);
-        /* Get the text field */
-        var copyText = document.getElementById(`result-${id}`);
-        var notice = document.getElementById(`notice-${id}`);
-
-        /* Select the text field */
-        copyText.select();
-        copyText.setSelectionRange(0, 99999); /* For mobile devices */
-
-        /* Copy the text inside the text field */
-        document.execCommand("copy");
-
-        notice.hidden = false;
-
-        setTimeout(() => {
-          notice.hidden = true;
-        }, 1500);
-      }
-
-      const form = document.getElementById("main-form");
-      const linkContainer = document.querySelector(".links");
-
-      form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        const formData = new FormData(form);
-        const data = {};
-        formData.forEach((val, key) => {
-          data[key] = val;
-        });
-
-        fetch("/links", {
-          method: "post",
-          body: JSON.stringify(data),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((res) => res.json())
-          .then(({ data }) => {
-            linkContainer.innerHTML += `
-            <div class="p-2 flex flex-col space-y-2">
-                <div><label for="">Original:</label>
-                    <div>${data.original_url}</div>
-                </div>    
-                <div  onclick="myFunction('${data.hash}');" >
-                    <label for="">Smol: </label>
-            
-                    <input class="w-full" id="result-${data.hash}"  value="${data.short_link}">
-                </div>
-                    <span id="notice-${data.hash}" hidden>Copied</span>
-            </div>
-            <hr/>
-            
-            `;
-          });
-      });
-    </script>
-
-    <!-- <script src="/js/app.js"></script>  -->
   </body>
 </html>

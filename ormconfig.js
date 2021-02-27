@@ -1,3 +1,4 @@
+
 module.exports = [
   {
     "name": "default",
@@ -5,16 +6,16 @@ module.exports = [
     host: process.env.DATABASE_URL,
     database: process.env.DATABASE,
     port: process.env.DB_PORT,
-    username: process.env.USERNAME,
-    password: process.env.PASSWORD,
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
     "synchronize": false,
     "logging": true,
-    "entities": ["src/**/*.ts"],
-    "migrations": ["src/migration/**/*.ts"],
+    "entities": ["src/links/*.ts"],
+    "migrations": ["migrations/**/*.ts"],
     "subscribers": ["src/subscriber/**/*.ts"],
     "cli": {
       "entitiesDir": "src/entity",
-      "migrationsDir": "src/migration",
+      "migrationsDir": "migrations",
       "subscribersDir": "src/subscriber"
     }
   },
@@ -24,12 +25,12 @@ module.exports = [
     host: process.env.DATABASE_URL,
     database: process.env.DATABASE,
     port: process.env.DB_PORT,
-    username: process.env.USERNAME,
-    password: process.env.PASSWORD,
+    username: process.env.DB_USERNAME,
+    password: process.env.DB_PASSWORD,
     "synchronize": false,
     "logging": false,
     "entities": ["build/**/*.js"],
-    "migrations": ["build/migration/**/*.js"],
+    // "migrations": ["migrations/**/*.ts"],
     "subscribers": ["build/subscriber/**/*.js"],
 
   }

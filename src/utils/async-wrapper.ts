@@ -1,6 +1,14 @@
-export const asyncUtil = (fn: CallableFunction) =>
-  function asyncUtilWrap(...args: any[]) {
-    const fnReturn = fn(...args);
-    const next = args[args.length - 1];
+import { NextFunction, Request, RequestHandler, Response } from "express";
+
+/**
+ * @description Wrap asynchronous functions.
+ * @param fn
+ * @returns RequestHandler
+ */
+export const wrapAsync = (fn: RequestHandler): RequestHandler => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    const fnReturn = fn(req, res, next);
+
     return Promise.resolve(fnReturn).catch(next);
-  };
+  }
+};
