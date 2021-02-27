@@ -30,7 +30,7 @@ module.exports = [
     "synchronize": false,
     "logging": false,
     "entities": ["build/**/*.js"],
-    "migrations": ["migrations/**/*.ts"],
+    // "migrations": ["migrations/**/*.ts"],
     "subscribers": ["build/subscriber/**/*.js"],
 
   }
