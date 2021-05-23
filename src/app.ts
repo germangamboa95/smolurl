@@ -1,27 +1,27 @@
 import "reflect-metadata";
 require("dotenv").config();
 import { Server } from "@overnightjs/core";
-import express from "express"
-import { LinkController, RedirectController } from "./links/links.controller";
-import { StaticController } from "./StaticController";
+import express from "express";
+import {
+  LinkController,
+  RedirectController,
+  StaticController,
+} from "./http/controllers";
 import { Logger } from "@overnightjs/logger";
 
-
 export class ApplicationServer extends Server {
-
   constructor() {
-    super(process.env.NODE_ENV === 'development'); // setting showLogs to true
-    this.setup()
+    super(process.env.NODE_ENV === "development"); // setting showLogs to true
+    this.setup();
     this.setupControllers();
   }
 
   private setupControllers(): void {
-
-
-    super.addControllers(
-      [new StaticController(), new LinkController(), new RedirectController()],
-
-    );
+    super.addControllers([
+      new StaticController(),
+      new LinkController(),
+      new RedirectController(),
+    ]);
   }
 
   private setup() {
@@ -33,9 +33,8 @@ export class ApplicationServer extends Server {
   }
 
   public start(port: number): void {
-    console.log("SDFGSDFGD")
     this.app.listen(port, () => {
-      Logger.Imp('Server listening on port: ' + port);
-    })
+      Logger.Imp("Server listening on port: " + port);
+    });
   }
 }
