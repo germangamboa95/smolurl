@@ -1,7 +1,7 @@
 import { Controller, Get, Post } from "@overnightjs/core";
 import { Request, Response } from "express";
 import { nanoid } from "nanoid";
-import { LinkRepository } from "../../links/link.repository";
+import { LinkRepository } from "../../modules/links/link.repository";
 
 @Controller("links")
 export class LinkController {

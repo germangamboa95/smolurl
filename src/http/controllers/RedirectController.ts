@@ -1,7 +1,10 @@
 import { Controller, Get, Post } from "@overnightjs/core";
 import { Request, Response } from "express";
-import { HitRepository, LinkRepository } from "../../links/link.repository";
-import { fireWebhook } from "../../links/webhooks";
+import {
+  HitRepository,
+  LinkRepository,
+} from "../../modules/links/link.repository";
+import { fireWebhook } from "../../modules/links/webhooks";
 
 @Controller("")
 export class RedirectController {
